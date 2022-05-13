@@ -28,7 +28,7 @@ public class FacultyController {
     public ResponseEntity<Faculty> getFacultyById(@PathVariable long facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
         if (faculty == null) {
-            return ResponseEntity.badRequest().build()  ;
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(faculty);
     }
@@ -53,10 +53,7 @@ public class FacultyController {
 
     @DeleteMapping("{facultyId}")
     public ResponseEntity<Faculty> deleteFaculty(@PathVariable long facultyId) {
-        Faculty faculty = facultyService.deleteFaculty(facultyId);
-        if (faculty == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(faculty);
+        facultyService.deleteFaculty(facultyId);
+        return ResponseEntity.ok().build();
     }
 }
