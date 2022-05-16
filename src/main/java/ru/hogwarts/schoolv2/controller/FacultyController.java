@@ -4,9 +4,11 @@ package ru.hogwarts.schoolv2.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.schoolv2.model.Faculty;
+import ru.hogwarts.schoolv2.model.Student;
 import ru.hogwarts.schoolv2.service.FacultyService;
 
 import java.util.Collection;
+import java.util.List;
 
 @RestController
 @RequestMapping("faculty")
@@ -24,6 +26,7 @@ public class FacultyController {
         return ResponseEntity.ok(createdFaculty);
     }
 
+
     @GetMapping("{facultyId}")
     public ResponseEntity<Faculty> getFacultyById(@PathVariable long facultyId) {
         Faculty faculty = facultyService.getFaculty(facultyId);
@@ -32,10 +35,27 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty);
     }
+    @GetMapping("students")
+    public ResponseEntity<List<Student>> getFacultyStudents(@RequestParam("facultyId") long facultyId) {
+        List<Student> students = facultyService.getFacultyStudents(facultyId);
+        if (students.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(students);
+    }
 
-    @GetMapping({"filter/{color}"})
+    @GetMapping("filter/color")
     public ResponseEntity<Collection<Faculty>> getFacultyByColor(@PathVariable String color) {
-        Collection<Faculty> faculties = facultyService.getFacultyByColor(color);
+        List<Faculty> faculties = facultyService.getFacultyByColor(color);
+        if (faculties.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(faculties);
+    }
+
+    @GetMapping("/findNameOrColor")
+    public ResponseEntity<List<Faculty>> getFacultyByNameOrColor(@PathVariable String nameOrColor) {
+        List<Faculty> faculties = facultyService.getFIndByNameOrColor(nameOrColor);
         if (faculties.isEmpty()) {
             return ResponseEntity.badRequest().build();
         }

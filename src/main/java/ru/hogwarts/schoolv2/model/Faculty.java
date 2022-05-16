@@ -1,9 +1,10 @@
 package ru.hogwarts.schoolv2.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,10 +17,15 @@ public class Faculty {
     private String name;
     private String color;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "faculty", fetch = FetchType.EAGER)
+    private List<Student> studentsList;
+
     public Faculty(long id, String name, String color) {
         this.id = id;
         this.name = name;
         this.color = color;
+//        this.studentsList = studentsList;
     }
 
     public Faculty() {
@@ -49,12 +55,21 @@ public class Faculty {
         this.color = color;
     }
 
+    public List<Student> getStudentsList(){
+        return studentsList;
+    }
+
+    public void setStudentsList(List<Student> studentsList) {
+        this.studentsList = studentsList;
+    }
+
     @Override
     public String toString() {
         return "Faculty{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
+                ", studentsList=" + studentsList +
                 '}';
     }
 
@@ -70,4 +85,6 @@ public class Faculty {
     public int hashCode() {
         return Objects.hash(id, name, color);
     }
+
+
 }
