@@ -27,7 +27,7 @@ public class StudentController {
 
     @GetMapping("/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable long studentId) {
-        Student student = studentService.getStudents(studentId);
+        Student student = studentService.getStudentsById(studentId);
         if (student == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

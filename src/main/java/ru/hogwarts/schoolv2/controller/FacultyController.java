@@ -30,7 +30,7 @@ public class FacultyController {
 
     @GetMapping("/{facultyId}")
     public ResponseEntity<Faculty> getFacultyById(@PathVariable long facultyId) {
-        Faculty faculty = facultyService.getFaculty(facultyId);
+        Faculty faculty = facultyService.getFacultyById(facultyId);
         if (faculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }

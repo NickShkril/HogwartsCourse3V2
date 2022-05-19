@@ -1,52 +1,27 @@
 package ru.hogwarts.schoolv2.service;
 
 import org.springframework.stereotype.Service;
-import org.webjars.NotFoundException;
 import ru.hogwarts.schoolv2.model.Faculty;
 import ru.hogwarts.schoolv2.model.Student;
-import ru.hogwarts.schoolv2.reposotories.FacultyRepository;
 
 import java.util.List;
 
 @Service
-public class FacultyService {
+public interface FacultyService {
 
-    private final FacultyRepository facultyRepository;
 
-    public FacultyService(FacultyRepository facultyRepository) {
-        this.facultyRepository = facultyRepository;
-    }
+    Faculty createFaculty(Faculty faculty);
 
-    public Faculty createFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
-    }
+    Faculty getFacultyById(long facultyId);
 
-    public Faculty getFacultyById(long facultyId) {
-        return getFaculty(facultyId);
-    }
+    List<Faculty> getFacultyByColor(String color);
 
-    public List<Faculty> getFacultyByColor(String color) {
-        return facultyRepository.findFacultyByColor(color);
-    }
+    List<Faculty> getFIndByNameOrColor(String nameOrColor);
 
-    public List<Faculty> getFIndByNameOrColor(String nameOrColor) {
-        return facultyRepository.findFacultyByColorOrNameAllIgnoreCase(nameOrColor, nameOrColor);
-    }
+    List<Student> getFacultyStudents(long facultyId);
 
-    public Faculty updateFaculty(Faculty faculty) {
-        return facultyRepository.save(faculty);
-    }
+    Faculty updateFaculty(Faculty faculty);
 
-    public void deleteFaculty(long facultyId) {
-        facultyRepository.deleteById(facultyId);
-    }
+    void deleteFaculty(long facultyId);
 
-    public Faculty getFaculty(long facultyId) {
-        return facultyRepository.findById(facultyId).orElseThrow(() -> new NotFoundException("Факульетет не найден"));
-    }
-
-    public List<Student> getFacultyStudents(long facultyId) {
-        Faculty faculty = getFaculty(facultyId);
-        return faculty.getStudentsList();
-    }
 }
