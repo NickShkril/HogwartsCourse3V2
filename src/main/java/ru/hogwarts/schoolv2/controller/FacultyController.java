@@ -46,7 +46,7 @@ public class FacultyController {
     }
 
     @GetMapping("/filter/color")
-    public ResponseEntity<Collection<Faculty>> getFacultyByColor(@PathVariable String color) {
+    public ResponseEntity<Collection<Faculty>> getFacultyByColor(@RequestParam String color) {
         List<Faculty> faculties = facultyService.getFacultyByColor(color);
         if (faculties.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -55,7 +55,7 @@ public class FacultyController {
     }
 
     @GetMapping("/findNameOrColor")
-    public ResponseEntity<List<Faculty>> getFacultyByNameOrColor(@PathVariable String nameOrColor) {
+    public ResponseEntity<List<Faculty>> getFacultyByNameOrColor(@RequestParam String nameOrColor) {
         List<Faculty> faculties = facultyService.getFIndByNameOrColor(nameOrColor);
         if (faculties.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
