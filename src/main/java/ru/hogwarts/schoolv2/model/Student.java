@@ -1,6 +1,7 @@
 package ru.hogwarts.schoolv2.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.webjars.NotFoundException;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -82,5 +83,9 @@ public class Student {
                 ", age=" + age +
                 ", faculty=" + faculty +
                 '}';
+    }
+
+    public Student orElseThrow() {
+        throw new NotFoundException("Студент не найден");
     }
 }

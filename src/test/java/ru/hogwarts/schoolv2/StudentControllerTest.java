@@ -8,7 +8,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import ru.hogwarts.schoolv2.controller.StudentController;
 import ru.hogwarts.schoolv2.model.Student;
-
+import ru.hogwarts.schoolv2.service.StudentService;
 import java.io.IOException;
 import java.util.List;
 
@@ -25,6 +25,9 @@ public class StudentControllerTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+    @Autowired
+    private StudentService studentService;
 
     @Test
     public void contextLoads() throws IOException {
@@ -43,13 +46,19 @@ public class StudentControllerTest {
 
     @Test
     void testGetStudentById() {
-        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/1", Long.class)).isNotNull();
+        Student student = new Student();
+        student.setId(1);
+        student.setAge(11);
+        student.setName("Vanya");
+        Student savedStudent = studentService.createStudent(student);
+        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student" + savedStudent.getId(), Student.class)).isEqualTo(savedStudent);
     }
 
     @Test
     void testGetFacultyStudent() {
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/2/faculty", String.class)).isNotNull();
     }
+
     @Test
     void testGetStudentByAge() {
         Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/filter/11", String.class)).isNotEmpty();
@@ -74,5 +83,5 @@ public class StudentControllerTest {
 
         assertDoesNotThrow(() -> this.testRestTemplate.put("http://localhost:" + port + "/student/2", student));
     }
-    }
+}
 
