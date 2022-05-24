@@ -26,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentsById(long studentId) {
-        return studentRepository.getById(studentId).orElseThrow();
+        return studentRepository.findById(studentId).orElseThrow();
     }
 
     @Override

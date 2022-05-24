@@ -51,7 +51,7 @@ public class StudentControllerTest {
         student.setAge(11);
         student.setName("Vanya");
         Student savedStudent = studentService.createStudent(student);
-        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student" + savedStudent.getId(), Student.class)).isEqualTo(savedStudent);
+        Assertions.assertThat(this.testRestTemplate.getForObject("http://localhost:" + port + "/student/" + savedStudent.getId(), Student.class)).isEqualTo(savedStudent);
     }
 
     @Test
