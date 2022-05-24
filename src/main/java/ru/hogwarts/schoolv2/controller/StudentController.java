@@ -76,4 +76,23 @@ public class StudentController {
         studentService.deleteStudent(studentId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("amountStudents")
+    public Integer amountStudents() {
+        return studentService.amountStudents();
+    }
+
+    @GetMapping("studentAverageAge")
+    public Double studentAverageAge() {
+        return studentService.studentAverageAge();
+    }
+
+    @GetMapping("lastFiveStudents")
+    public ResponseEntity<List<Student>> lastFiveStudents() {
+        List<Student> lastFiveStudent = studentService.lastFiveStudents();
+        if (lastFiveStudent.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(lastFiveStudent);
+    }
 }

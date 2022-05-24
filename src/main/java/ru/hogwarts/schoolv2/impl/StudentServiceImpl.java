@@ -59,4 +59,21 @@ public class StudentServiceImpl implements StudentService {
                 () -> new NotFoundException("Студент не найден!")
         );
     }
+
+    @Override
+    public Integer amountStudents() {
+        return studentRepository.studentAmount();
+    }
+
+    @Override
+    public Double studentAverageAge() {
+        return studentRepository.studentAverageAge();
+    }
+
+    @Override
+    public List<Student> lastFiveStudents() {
+        return studentRepository.lastFiveStudents();
+    }
+
+
 }

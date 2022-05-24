@@ -23,4 +23,10 @@ public interface StudentService {
     Student updateStudent(Student student);
 
     void deleteStudent(long studentId);
+
+    Integer amountStudents();
+
+    Double studentAverageAge();
+
+    List<Student> lastFiveStudents();
 }
