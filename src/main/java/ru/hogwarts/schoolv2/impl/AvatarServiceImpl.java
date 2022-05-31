@@ -12,6 +12,9 @@ import ru.hogwarts.schoolv2.reposotories.AvatarRepository;
 import ru.hogwarts.schoolv2.reposotories.StudentRepository;
 import ru.hogwarts.schoolv2.service.AvatarService;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.nio.file.Files;
@@ -20,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
+
 
 @Service
 @Transactional
@@ -36,9 +40,12 @@ public class AvatarServiceImpl implements AvatarService {
         this.studentRepository = studentRepository;
     }
 
+    Logger logger = LoggerFactory.getLogger(StudentServiceImpl.class);
+
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Was invoked method for upload Avatar");
         Optional<Student> st = studentRepository.findById(studentId);
         Student student = st.orElseThrow(() -> new NotFoundException("Студент с id" + studentId + "не найден!"));
         Path filePath = Path.of(avatarsDir, studentId + "+" + getExtensions(avatarFile.getOriginalFilename()));
@@ -64,15 +71,18 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public Avatar findAvatar(long studentId) {
+        logger.info("Was invoked method for find Avatar");
         return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
     }
 
     private String getExtensions(String fileName) {
+        logger.info("Was invoked method for get Extensions");
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     @Override
     public List<Avatar> findAll() {
+        logger.info("Was invoked method for find all avatars");
         Pageable pageable = PageRequest.of(0, 4);
         return avatarRepository.findAll(pageable).getContent();
     }
