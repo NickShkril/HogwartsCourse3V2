@@ -11,6 +11,8 @@ import ru.hogwarts.schoolv2.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Stream;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -88,6 +90,36 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> lastFiveStudents() {
         logger.info("Was invoked method for find last five Students");
         return studentRepository.lastFiveStudents();
+    }
+
+    @Override
+    public List<String> nameStartWithWordA() {
+        return studentRepository.findAll()
+                .stream()
+                .parallel()
+                .map(student -> student.getName())
+                .filter(a -> a.charAt(0) == 'A')
+                .map(a -> a.toUpperCase(Locale.ROOT))
+                .sorted()
+                .toList();
+    }
+
+    @Override
+    public Double averageAgeOfAllStudents() {
+        return studentRepository.findAll()
+                .stream()
+                .mapToDouble(student -> student.getAge())
+                .average()
+                .orElseThrow(() -> new NotFoundException("Not found any student"));
+    }
+
+
+    // Что тут вообще надо делать? Сама идея предлагает a+b заменить на метод Integer::sum
+    @Override
+    public Integer fastestSum() {
+        return Stream.iterate(1, a -> a + 1)
+                .limit(1_000_000)
+                .reduce(0, (a, b) -> a + b);
     }
 
 

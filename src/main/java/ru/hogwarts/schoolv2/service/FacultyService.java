@@ -24,4 +24,5 @@ public interface FacultyService {
 
     void deleteFaculty(long facultyId);
 
+    String longestNameOfFaculties();
 }
