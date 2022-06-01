@@ -9,6 +9,7 @@ import ru.hogwarts.schoolv2.model.Student;
 import ru.hogwarts.schoolv2.reposotories.FacultyRepository;
 import ru.hogwarts.schoolv2.service.FacultyService;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -56,6 +57,16 @@ public class FacultyServiceImpl implements FacultyService {
     public void deleteFaculty(long facultyId) {
         logger.info("Was invoked method for delete faculty");
         facultyRepository.deleteById(facultyId);
+    }
+
+    @Override
+    public String longestNameOfFaculties() {
+        return facultyRepository.findAll()
+                .stream()
+                .parallel()
+                .map(faculty -> faculty.getName())
+                .max(Comparator.comparing(s -> s.length()))
+                .orElseThrow(() -> new NotFoundException("Faculty not found"));
     }
 
 

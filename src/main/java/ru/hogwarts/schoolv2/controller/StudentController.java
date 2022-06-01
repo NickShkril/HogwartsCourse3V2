@@ -77,22 +77,42 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("amountStudents")
+    @GetMapping("/amountStudents")
     public Integer amountStudents() {
         return studentService.amountStudents();
     }
 
-    @GetMapping("studentAverageAge")
+    @GetMapping("/studentAverageAge")
     public Double studentAverageAge() {
         return studentService.studentAverageAge();
     }
 
-    @GetMapping("lastFiveStudents")
+    @GetMapping("/lastFiveStudents")
     public ResponseEntity<List<Student>> lastFiveStudents() {
         List<Student> lastFiveStudent = studentService.lastFiveStudents();
         if (lastFiveStudent.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(lastFiveStudent);
+    }
+
+    @GetMapping("/nameStartWithWordA")
+    public ResponseEntity<List<String>> nameStartWithWordA() {
+        List<String> names = studentService.nameStartWithWordA();
+        if (names.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(names);
+    }
+
+    @GetMapping("/averageAgeOfAllStudents")
+    public ResponseEntity<Double> averageAgeOfAllStudents() {
+        return ResponseEntity.ok(studentService.averageAgeOfAllStudents());
+    }
+
+
+    @GetMapping("/fasterSum")
+    public Integer fasterSum() {
+        return studentService.fastestSum();
     }
 }

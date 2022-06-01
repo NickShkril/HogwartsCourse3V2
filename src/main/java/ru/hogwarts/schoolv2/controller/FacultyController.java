@@ -77,4 +77,9 @@ public class FacultyController {
         facultyService.deleteFaculty(facultyId);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/longestNameOfFaculties")
+    public ResponseEntity<String> longestNamOfFaculties() {
+        return ResponseEntity.ok(facultyService.longestNameOfFaculties());
+    }
 }
