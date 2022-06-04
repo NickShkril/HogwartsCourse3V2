@@ -115,4 +115,15 @@ public class StudentController {
     public Integer fasterSum() {
         return studentService.fastestSum();
     }
+
+    @GetMapping("/printName")
+    public void printName() {
+        studentService.printName();
+    }
+
+    @GetMapping("/printNameSync")
+    public void printNameSync() {
+        studentService.printNameSync();
+    }
 }
+

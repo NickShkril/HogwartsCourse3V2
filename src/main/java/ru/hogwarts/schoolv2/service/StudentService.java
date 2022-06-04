@@ -35,6 +35,11 @@ public interface StudentService {
 
     Double averageAgeOfAllStudents();
 
-
     Integer fastestSum();
+
+    void printName();
+
+    void printNameSync();
+
 }
+

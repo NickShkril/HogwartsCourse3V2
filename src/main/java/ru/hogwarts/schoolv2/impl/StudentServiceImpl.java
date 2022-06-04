@@ -123,4 +123,50 @@ public class StudentServiceImpl implements StudentService {
     }
 
 
+    @Override
+    public void printName() {
+        List<Student> studentsList = studentRepository.findAll();
+
+        System.out.println(studentsList.get(0).getName());
+        System.out.println(studentsList.get(1).getName());
+
+        new Thread(() -> {
+            System.out.println(studentsList.get(2).getName());
+            System.out.println(studentsList.get(3).getName());
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(studentsList.get(4).getName());
+            System.out.println(studentsList.get(5).getName());
+        }).start();
+
+
+    }
+
+    @Override
+    public void printNameSync() {
+        methodForSyncPrint(0);
+        methodForSyncPrint(1);
+
+        new Thread(() -> {
+            methodForSyncPrint(2);
+            methodForSyncPrint(3);
+        }).start();
+
+
+        new Thread(() -> {
+            methodForSyncPrint(4);
+            methodForSyncPrint(5);
+        }).start();
+
+    }
+
+
+    private synchronized void methodForSyncPrint(long id) {
+        String studentList = studentRepository.getById(id).getName();
+        System.out.println(studentList);
+    }
+
 }
+
+
