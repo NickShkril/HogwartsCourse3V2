@@ -29,4 +29,17 @@ public interface StudentService {
     Double studentAverageAge();
 
     List<Student> lastFiveStudents();
+
+
+    List<String> nameStartWithWordA();
+
+    Double averageAgeOfAllStudents();
+
+    Integer fastestSum();
+
+    void printName();
+
+    void printNameSync();
+
 }
+

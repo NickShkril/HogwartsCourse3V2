@@ -21,4 +21,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     @Query(value = "SELECT AVG(age) FROM student", nativeQuery = true)
     double studentAverageAge();
+
+
 }
